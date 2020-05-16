@@ -14,8 +14,10 @@ func TestIsValidURL(t *testing.T) {
 	badURL2 := isValidURL("http://...")
 
 	require := require.New(t)
-	require.True(goodURL1)
-	require.True(goodURL2)
-	require.False(badURL1)
-	require.False(badURL2)
+
+	require.True(goodURL1, "https://www.github.com/github should be a valid URL")
+	require.True(goodURL2, "http://homeofthefree.org should be a valid URL")
+
+	require.False(badURL1, "hpt//isnota.protocol should not be a valid URL")
+	require.False(badURL2, "http://... should not be a valid URL")
 }
