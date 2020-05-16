@@ -1,2 +1,2 @@
-# trim
-Open source URL Shortener
+# Trim - URL Shortener
+The open source URL shortener
