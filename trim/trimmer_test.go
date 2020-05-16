@@ -21,3 +21,14 @@ func TestIsValidURL(t *testing.T) {
 	require.False(badURL1, "hpt//isnota.protocol should not be a valid URL")
 	require.False(badURL2, "http://... should not be a valid URL")
 }
+
+func TestGetTrimmed(t *testing.T) {
+	// Assert GetTrimmed returns empty string and badurlerror when url is invalid
+	badURL := "https://github"
+	_, err := GetTrimmed(badURL)
+
+	if err == nil {
+		t.Fatal("GetTrimmed allows invalid URLs")
+	}
+
+}
