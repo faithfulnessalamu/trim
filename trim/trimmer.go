@@ -2,6 +2,15 @@ package trim
 
 import "regexp"
 
+/*ErrorBadURL is a custom error for handling invalid urls*/
+type ErrorBadURL struct {
+	msg string
+}
+
+func (e *ErrorBadURL) Error() string {
+	return e.msg
+}
+
 /*GetTrimmed generates and returns a shorter link from longURL
 It returns an error if trimming fails for some reason*/
 func GetTrimmed(longURL string) (string, error) {
