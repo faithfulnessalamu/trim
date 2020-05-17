@@ -7,6 +7,8 @@ import (
 	"regexp"
 )
 
+const truncatedLength = 8
+
 /*ErrorBadURL is a custom error for handling invalid urls*/
 type ErrorBadURL struct {
 	msg string
@@ -21,7 +23,7 @@ func getDigest(input string) string {
 	hash := sha1.New()
 	io.WriteString(hash, input)
 	sum := hash.Sum(nil)
-	truncated := fmt.Sprintf("%x", sum)[:8]
+	truncated := fmt.Sprintf("%x", sum)[:truncatedLength]
 	return truncated
 }
 
