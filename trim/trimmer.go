@@ -1,6 +1,8 @@
 package trim
 
-import "regexp"
+import (
+	"regexp"
+)
 
 /*ErrorBadURL is a custom error for handling invalid urls*/
 type ErrorBadURL struct {
@@ -13,7 +15,7 @@ func (e *ErrorBadURL) Error() string {
 
 /*GetTrimmed generates and returns a shorter link from longURL and some ID
 It returns an error if trimming fails for some reason*/
-func GetTrimmed(longURL string, id int) (string, error) {
+func GetTrimmed(longURL string) (string, error) {
 	if !isValidURL(longURL) {
 		return "", &ErrorBadURL{msg: "Not a valid URL"}
 	}

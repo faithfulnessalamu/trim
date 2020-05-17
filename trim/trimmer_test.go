@@ -25,11 +25,10 @@ func TestIsValidURL(t *testing.T) {
 func TestGetTrimmed(t *testing.T) {
 	// Assert GetTrimmed returns empty string and badurlerror when url is invalid
 	badURL := "https://github"
-	id := 1000
-	_, err := GetTrimmed(badURL, id)
+
+	_, err := GetTrimmed(badURL)
 
 	if err == nil {
 		t.Fatal("GetTrimmed allows invalid URLs")
 	}
-
 }
