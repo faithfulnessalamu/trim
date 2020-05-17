@@ -25,11 +25,20 @@ func TestIsValidURL(t *testing.T) {
 func TestGetTrimmed(t *testing.T) {
 	// Assert GetTrimmed returns empty string and badurlerror when url is invalid
 	badURL := "https://github"
-
 	_, err := GetTrimmed(badURL)
 
 	if err == nil {
 		t.Fatal("GetTrimmed allows invalid URLs")
+	}
+
+	goodURL := "https://github.com"
+	trimmed, err := GetTrimmed(goodURL)
+
+	if err != nil {
+		t.Fatal("GetTrimmed rejects a good URL")
+	}
+	if !isValidURL(trimmed) {
+		t.Fatal("GetTrimmed returns an invalid URL")
 	}
 }
 
@@ -38,6 +47,6 @@ func TestGetDigest(t *testing.T) {
 	digest := getDigest(input)
 
 	if len(digest) != truncatedLength {
-		t.Fatalf("Digest is not "%d" characters long", truncatedLength)
+		t.Fatalf("Digest is not %d characters long", truncatedLength)
 	}
 }
