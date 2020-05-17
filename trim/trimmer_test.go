@@ -1,6 +1,7 @@
 package trim
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -30,5 +31,14 @@ func TestGetTrimmed(t *testing.T) {
 
 	if err == nil {
 		t.Fatal("GetTrimmed allows invalid URLs")
+	}
+}
+
+func TestGetDigest(t *testing.T) {
+	input := "https://www.github.com"
+	digest := getDigest(input)
+
+	if len(digest) != 8 {
+		t.Fatal("Digest is not 8 characters long")
 	}
 }
