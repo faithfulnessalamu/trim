@@ -8,6 +8,7 @@ import (
 )
 
 const truncatedLength = 8
+const rootPath = "trim.ly/"
 
 /*ErrorBadURL is a custom error for handling invalid urls*/
 type ErrorBadURL struct {
@@ -34,6 +35,7 @@ func GetTrimmed(longURL string) (string, error) {
 		return "", &ErrorBadURL{msg: "Not a valid URL"}
 	}
 	digest := getDigest(longURL)
+	return rootPath + digest, nil
 }
 
 /*isValidURL checks if a url is valid or not.
