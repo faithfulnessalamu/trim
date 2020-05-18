@@ -4,11 +4,12 @@ import (
 	"crypto/sha1"
 	"fmt"
 	"io"
+	"path"
 	"regexp"
 )
 
 const truncatedLength = 8
-const rootPath = "trim.ly/"
+const rootPath = "localhost:8080/"
 
 /*ErrorBadURL is a custom error for handling invalid urls*/
 type ErrorBadURL struct {
@@ -38,12 +39,18 @@ func GetTrimmed(input string) (string, error) {
 	longURL := input
 	digest := getDigest(longURL)
 
-	return rootPath + digest, nil
+	return path.Join(rootPath + digest), nil
 }
 
 /*isValidURL checks if a url is valid or not.
 Returns true if it is, else false*/
 func isValidURL(input string) bool {
-	matcher := regexp.MustCompile(`[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)`)
+	matcher := regexp.MustCompile(`[a-zA-Z]*:\/\/[a-z\.@]+\.[a-z]{2,5}[\/]?\S*`)
 	return matcher.MatchString(input)
+}
+
+/* IsValidTrimURL checks if a URL is a trim url */
+func IsValidTrimURL(url string) bool {
+	matcher := regexp.MustCompile(`^` + rootPath + `[a-zA-Z0-9]{8,8}`)
+	return matcher.MatchString(url)
 }
