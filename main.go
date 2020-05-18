@@ -31,5 +31,14 @@ func trimHandler(w http.ResponseWriter, r *http.Request) {
 	longURL := input
 	// Save url pair to database
 	saveErr := data.SavePair(trimmedURL, longURL)
+	if saveErr != nil {
+		// url has been saved before, return saved url
+		savedLongURL, getErr := data.GetLongURL(trimmedURL)
+		if getErr != nil {
+			// Can't save, can't get? We don't know what to do!
+			panic(getErr)
+		}
+		fmt.Fprintln(w, savedLongURL)
+	}
 	fmt.Fprintln(w, trimmedURL)
 }
