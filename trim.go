@@ -20,7 +20,19 @@ func main() {
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	fullURL := rootPath + r.URL.String()
 	if isValidTrimURL(fullURL) {
+		trimmedURL := fullURL
 		// Get longURL and redirect
+		longURL, err := data.GetLongURL(trimmedURL)
+		if err != nil {
+			// This trimmed URL is not in the database
+			http.NotFound(w, r)
+		} else {
+			// Redirect the user temporarily
+			http.Redirect(w, r, longURL, http.StatusTemporaryRedirect)
+		}
+	} else {
+		// Not a valid URL
+		http.NotFound(w, r)
 	}
 }
 
