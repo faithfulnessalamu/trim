@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/vague369/trim/data"
 	"github.com/vague369/trim/trim"
 )
 
@@ -29,6 +30,6 @@ func trimHandler(w http.ResponseWriter, r *http.Request) {
 	// input is validated to be a URL
 	longURL := input
 	// Save url pair to database
-	saveErr := savePair(trimmedURL, longURL)
+	saveErr := data.SavePair(trimmedURL, longURL)
 	fmt.Fprintln(w, trimmedURL)
 }
