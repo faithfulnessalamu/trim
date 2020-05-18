@@ -5,7 +5,7 @@ import (
 	"net/http"
 
 	"github.com/vague369/trim/data"
-	"github.com/vague369/trim/trim"
+	"github.com/vague369/trim/trimmer"
 )
 
 func main() {
@@ -22,7 +22,7 @@ func trimHandler(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query()
 	input := query.Get("input")
 
-	trimmedURL, err := trim.GetTrimmed(input)
+	trimmedURL, err := trimmer.GetTrimmed(input)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintln(w, err)
