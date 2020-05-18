@@ -23,6 +23,7 @@ func trimHandler(w http.ResponseWriter, r *http.Request) {
 
 	trimmedURL, err := trim.GetTrimmed(input)
 	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintln(w, err)
 	}
 	fmt.Fprintln(w, trimmedURL)
