@@ -19,9 +19,9 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 
 func trimHandler(w http.ResponseWriter, r *http.Request) {
 	query := r.URL.Query()
-	longURL := query.Get("longUrl")
+	input := query.Get("input")
 
-	trimmedURL, err := trim.GetTrimmed(longURL)
+	trimmedURL, err := trim.GetTrimmed(input)
 	if err != nil {
 		fmt.Fprintln(w, err)
 	}

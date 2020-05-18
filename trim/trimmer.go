@@ -20,27 +20,30 @@ func (e *ErrorBadURL) Error() string {
 }
 
 /*TODO: ADD DOCSTRING*/
-func getDigest(input string) string {
+func getDigest(longURL string) string {
 	hash := sha1.New()
-	io.WriteString(hash, input)
+	io.WriteString(hash, longURL)
 	sum := hash.Sum(nil)
 	truncated := fmt.Sprintf("%x", sum)[:truncatedLength]
 	return truncated
 }
 
-/*GetTrimmed generates and returns a shorter link from longURL and some ID
+/*GetTrimmed generates and returns a shorter link from a validated input.
 It returns an error if trimming fails for some reason*/
-func GetTrimmed(longURL string) (string, error) {
-	if !isValidURL(longURL) {
+func GetTrimmed(input string) (string, error) {
+	if !isValidURL(input) {
 		return "", &ErrorBadURL{msg: "Not a valid URL"}
 	}
+	// The input has been validated to be a URL
+	longURL := input
 	digest := getDigest(longURL)
+
 	return rootPath + digest, nil
 }
 
 /*isValidURL checks if a url is valid or not.
 Returns true if it is, else false*/
-func isValidURL(url string) bool {
+func isValidURL(input string) bool {
 	matcher := regexp.MustCompile(`[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)`)
-	return matcher.MatchString(url)
+	return matcher.MatchString(input)
 }
