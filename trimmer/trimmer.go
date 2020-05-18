@@ -45,7 +45,7 @@ func GetTrimmed(input string) (string, error) {
 /*isValidURL checks if a url is valid or not.
 Returns true if it is, else false*/
 func isValidURL(input string) bool {
-	matcher := regexp.MustCompile(`[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)`)
+	matcher := regexp.MustCompile(`[a-zA-Z]*:\/\/[a-z\.@]+\.[a-z]{2,5}[\/]?\S*`)
 	return matcher.MatchString(input)
 }
 
