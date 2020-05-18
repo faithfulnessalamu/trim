@@ -8,7 +8,7 @@ import (
 )
 
 const truncatedLength = 8
-const rootPath = "trim.ly/"
+const rootPath = "localhost:8080/"
 
 /*ErrorBadURL is a custom error for handling invalid urls*/
 type ErrorBadURL struct {
