@@ -26,5 +26,9 @@ func trimHandler(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 		fmt.Fprintln(w, err)
 	}
+	// input is validated to be a URL
+	longURL := input
+	// Save url pair to database
+	saveErr := savePair(trimmedURL, longURL)
 	fmt.Fprintln(w, trimmedURL)
 }
