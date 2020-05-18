@@ -43,8 +43,8 @@ func TestGetTrimmed(t *testing.T) {
 }
 
 func TestGetDigest(t *testing.T) {
-	input := "https://www.github.com"
-	digest := getDigest(input)
+	longURL := "https://www.github.com"
+	digest := getDigest(longURL)
 
 	if len(digest) != truncatedLength {
 		t.Fatalf("Digest is not %d characters long", truncatedLength)
