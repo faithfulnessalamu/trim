@@ -1,6 +1,7 @@
 package trimmer
 
 import (
+	"path"
 	"testing"
 
 	"github.com/stretchr/testify/require"
@@ -23,11 +24,11 @@ func TestIsValidURL(t *testing.T) {
 }
 
 func TestIsValidTrimURL(t *testing.T) {
-	goodTrimURL := rootPath + "/h67j82er"
-	badTrimURL := rootPath + "/ht87j"
+	goodTrimURL := path.Join(rootPath, "/h67j82er")
+	badTrimURL := path.Join(rootPath, "/ht87j")
 
-	require.True(t, isValidTrimURL(goodTrimURL), "isValidTrimURL rejects a trim URL: "+goodTrimURL)
-	require.False(t, isValidTrimURL(badTrimURL), "isValidTrimURL allows a non-trim URL "+badTrimURL)
+	require.True(t, IsValidTrimURL(goodTrimURL), "isValidTrimURL rejects a trim URL: "+goodTrimURL)
+	require.False(t, IsValidTrimURL(badTrimURL), "isValidTrimURL allows a non-trim URL "+badTrimURL)
 }
 
 func TestGetTrimmed(t *testing.T) {
@@ -39,15 +40,15 @@ func TestGetTrimmed(t *testing.T) {
 		t.Fatal("GetTrimmed allows invalid URLs")
 	}
 
-	goodURL := "https://github.com"
+	goodURL := "https://www.github.com"
 	trimmed, err := GetTrimmed(goodURL)
 
 	if err != nil {
 		t.Fatal("GetTrimmed rejects a good URL")
 	}
 
-	if !isValidTrimURL(trimmed) {
-		t.Fatal("GetTrimmed returns an invalid URL")
+	if !IsValidTrimURL(trimmed) {
+		t.Fatal("GetTrimmed returns an invalid URL: " + trimmed)
 	}
 }
 

@@ -3,12 +3,13 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"path"
 
 	"github.com/vague369/trim/data"
 	"github.com/vague369/trim/trimmer"
 )
 
-const rootPath = "localhost:8080"
+const rootPath = "localhost:8080/"
 
 func main() {
 	http.HandleFunc("/", homeHandler)
@@ -17,9 +18,9 @@ func main() {
 }
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
-	fullURL := rootPath + r.URL.String()
+	fullURL := path.Join(rootPath, r.URL.String())
 
-	if trimmer.isValidTrimURL(fullURL) {
+	if trimmer.IsValidTrimURL(fullURL) {
 		trimmedURL := fullURL
 		// Get longURL and redirect
 		longURL, err := data.GetLongURL(trimmedURL)

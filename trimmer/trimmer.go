@@ -4,6 +4,7 @@ import (
 	"crypto/sha1"
 	"fmt"
 	"io"
+	"path"
 	"regexp"
 )
 
@@ -38,7 +39,7 @@ func GetTrimmed(input string) (string, error) {
 	longURL := input
 	digest := getDigest(longURL)
 
-	return rootPath + digest, nil
+	return path.Join(rootPath + digest), nil
 }
 
 /*isValidURL checks if a url is valid or not.
@@ -48,8 +49,8 @@ func isValidURL(input string) bool {
 	return matcher.MatchString(input)
 }
 
-/* Checks if a URL is a trim url */
-func isValidTrimURL(url string) bool {
+/* IsValidTrimURL checks if a URL is a trim url */
+func IsValidTrimURL(url string) bool {
 	matcher := regexp.MustCompile(fmt.Sprintf("^%s/[a-zA-Z0-9]{8,8}", rootPath))
 	return matcher.MatchString(url)
 }
