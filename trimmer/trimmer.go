@@ -51,6 +51,6 @@ func isValidURL(input string) bool {
 
 /* IsValidTrimURL checks if a URL is a trim url */
 func IsValidTrimURL(url string) bool {
-	matcher := regexp.MustCompile(fmt.Sprintf("^%s/[a-zA-Z0-9]{8,8}", rootPath))
+	matcher := regexp.MustCompile(`^` + rootPath + `[a-zA-Z0-9]{8,8}`)
 	return matcher.MatchString(url)
 }
