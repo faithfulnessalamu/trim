@@ -50,3 +50,10 @@ func TestGetDigest(t *testing.T) {
 		t.Fatalf("Digest is not %d characters long", truncatedLength)
 	}
 }
+
+func TestErrorBadURLString(t *testing.T) {
+	errMsg := "This is an error"
+	err := &ErrorBadURL{msg: errMsg}
+
+	require.Equal(t, err.Error(), errMsg, "String method of ErrorBadURL does not return saved message")
+}
