@@ -3,7 +3,6 @@ package main
 import (
 	"fmt"
 	"net/http"
-	"regexp"
 
 	"github.com/vague369/trim/data"
 	"github.com/vague369/trim/trimmer"
@@ -19,7 +18,8 @@ func main() {
 
 func homeHandler(w http.ResponseWriter, r *http.Request) {
 	fullURL := rootPath + r.URL.String()
-	if isValidTrimURL(fullURL) {
+
+	if trimmer.isValidTrimURL(fullURL) {
 		trimmedURL := fullURL
 		// Get longURL and redirect
 		longURL, err := data.GetLongURL(trimmedURL)
@@ -34,12 +34,6 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 		// Not a valid URL
 		http.NotFound(w, r)
 	}
-}
-
-/* Checks if a URL is a trim url */
-func isValidTrimURL(url string) bool {
-	matcher := regexp.MustCompile(fmt.Sprintf("^%s/[a-zA-Z0-9]{8,8}", rootPath))
-	return matcher.MatchString(url)
 }
 
 func trimHandler(w http.ResponseWriter, r *http.Request) {

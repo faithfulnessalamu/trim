@@ -22,6 +22,14 @@ func TestIsValidURL(t *testing.T) {
 	require.False(badURL2, "http://... should not be a valid URL")
 }
 
+func TestIsValidTrimURL(t *testing.T) {
+	goodTrimURL := rootPath + "/h67j82er"
+	badTrimURL := rootPath + "/ht87j"
+
+	require.True(t, isValidTrimURL(goodTrimURL), "isValidTrimURL rejects a trim URL: "+goodTrimURL)
+	require.False(t, isValidTrimURL(badTrimURL), "isValidTrimURL allows a non-trim URL "+badTrimURL)
+}
+
 func TestGetTrimmed(t *testing.T) {
 	// Assert GetTrimmed returns empty string and badurlerror when url is invalid
 	badURL := "https://github"
@@ -37,7 +45,8 @@ func TestGetTrimmed(t *testing.T) {
 	if err != nil {
 		t.Fatal("GetTrimmed rejects a good URL")
 	}
-	if !isValidURL(trimmed) {
+
+	if !isValidTrimURL(trimmed) {
 		t.Fatal("GetTrimmed returns an invalid URL")
 	}
 }

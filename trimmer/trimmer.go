@@ -47,3 +47,9 @@ func isValidURL(input string) bool {
 	matcher := regexp.MustCompile(`[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)`)
 	return matcher.MatchString(input)
 }
+
+/* Checks if a URL is a trim url */
+func isValidTrimURL(url string) bool {
+	matcher := regexp.MustCompile(fmt.Sprintf("^%s/[a-zA-Z0-9]{8,8}", rootPath))
+	return matcher.MatchString(url)
+}
