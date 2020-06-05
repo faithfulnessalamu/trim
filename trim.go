@@ -1,12 +1,18 @@
 package main
 
 import (
+	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 )
 
-var memoryDatabase = &memDatabase{data: make(map[string]string)}
+var (
+	memoryDatabase = &memDatabase{data: make(map[string]string)}
+	infoLogger     = log.New(os.Stdout, "INFO: ", log.LstdFlags)
+	debugLogger    = log.New(os.Stdout, "DEBUG: ", log.LstdFlags)
+)
 
 func main() {
 	r := mux.NewRouter()
