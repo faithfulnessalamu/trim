@@ -8,7 +8,9 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func TestRedirectHandlerFunc(t *testing.T) {
+var testDb = &memDatabase{data: make(map[string]string)}
+
+func TestRedirectHandler(t *testing.T) {
 	// Create a request
 	testPath := "/a1b2c3d4"
 	req, err := http.NewRequest(http.MethodGet, testPath, nil)
@@ -19,9 +21,9 @@ func TestRedirectHandlerFunc(t *testing.T) {
 	// Create a response recorder to capture the response
 	rr := httptest.NewRecorder()
 
-	// Create a handler from the RedirectHandlerFunc using mux to capture url vars
+	// Create a handler func using RedirectHandler and mux to capture url vars
 	router := mux.NewRouter()
-	router.HandleFunc("/{hash}", RedirectHandlerFunc)
+	router.HandleFunc("/{hash}", RedirectHandler(testDb))
 
 	// Record the response
 	router.ServeHTTP(rr, req)
