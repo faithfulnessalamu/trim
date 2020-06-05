@@ -8,7 +8,7 @@ import (
 )
 
 //RedirectHandler handles all redirects
-func RedirectHandler(w http.ResponseWriter, r *http.Request) {
+func RedirectHandlerFunc(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	trimHash := vars["hash"]
 	fmt.Fprintf(w, "Redirecting now from %s\n", trimHash)
