@@ -8,7 +8,7 @@ import (
 
 func main() {
 	r := mux.NewRouter()
-	r.HandleFunc("/{hash}", RedirectHandler)
+	r.HandleFunc("/{hash}", RedirectHandler).Methods(http.MethodGet)
 
 	http.ListenAndServe(":8080", r)
 }
