@@ -23,7 +23,7 @@ func TestRedirectHandler(t *testing.T) {
 
 	// Create a handler func using RedirectHandler and mux to capture url vars
 	router := mux.NewRouter()
-	router.HandleFunc("/{hash}", RedirectHandler(testDb))
+	router.HandleFunc("/{hash:[a-zA-Z0-9]{8,8}}", RedirectHandler(testDb))
 
 	// Record the response
 	router.ServeHTTP(rr, req)
