@@ -20,7 +20,7 @@ func (m *memDatabase) save(key string, value string) error {
 	return nil
 }
 
-func (m *memDatabase) retriever(key string) (string, error) {
+func (m *memDatabase) retrieve(key string) (string, error) {
 	value, ok := m.data[key]
 	if !ok {
 		return "", errors.New("Key does not exist")

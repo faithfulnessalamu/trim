@@ -8,10 +8,10 @@ type database interface {
 
 //saver is used by any service that can persist data
 type saver interface {
-	Save(key string, value string) error
+	save(key string, value string) error
 }
 
 //retriever is used by any service that can get data by key
 type retriever interface {
-	Retrieve(key string) (string, error)
+	retrieve(key string) (string, error)
 }
