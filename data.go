@@ -1,5 +1,13 @@
 package main
 
+import "errors"
+
+//custom errors
+var (
+	errKeyNotFound = errors.New("Key does not exist")
+	errKeyExists   = errors.New("Key exists already")
+)
+
 //database allows swapping storage for this app and for testing
 type database interface {
 	saver
