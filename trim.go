@@ -24,5 +24,6 @@ func main() {
 	statics := r.PathPrefix("/static/")
 	statics.Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./static"))))
 
+	infoLogger.Println("Serving on port 8080...")
 	http.ListenAndServe(":8080", r)
 }
