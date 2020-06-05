@@ -1,12 +1,18 @@
 package main
 
 import (
+	"log"
 	"net/http"
+	"os"
 
 	"github.com/gorilla/mux"
 )
 
-var memoryDatabase = &memDatabase{data: make(map[string]string)}
+var (
+	memoryDatabase = &memDatabase{data: make(map[string]string)}
+	infoLogger     = log.New(os.Stdout, "INFO: ", log.LstdFlags)
+	debugLogger    = log.New(os.Stdout, "DEBUG: ", log.LstdFlags)
+)
 
 func main() {
 	r := mux.NewRouter()
@@ -18,5 +24,6 @@ func main() {
 	statics := r.PathPrefix("/static/")
 	statics.Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./static"))))
 
+	infoLogger.Println("Serving on port 8080...")
 	http.ListenAndServe(":8080", r)
 }
