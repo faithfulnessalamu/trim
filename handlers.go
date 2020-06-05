@@ -10,7 +10,6 @@ import (
 //RedirectHandlerFunc handles all redirects
 func RedirectHandlerFunc(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	fmt.Println(r.URL.String())
 	trimHash := vars["hash"]
 	fmt.Fprintf(w, "Redirecting now from %s", trimHash)
 }
