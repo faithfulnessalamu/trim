@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gorilla/mux"
@@ -9,9 +8,7 @@ import (
 
 func main() {
 	r := mux.NewRouter()
-	r.HandleFunc("/", func(w http.ResponseWriter, req *http.Request) {
-		fmt.Fprintln(w, "Trim")
-	})
+	r.HandleFunc("/{hash}", RedirectHandler)
 
 	http.ListenAndServe(":8080", r)
 }
