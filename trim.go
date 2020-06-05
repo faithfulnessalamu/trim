@@ -6,9 +6,11 @@ import (
 	"github.com/gorilla/mux"
 )
 
+var memoryDatabase = &memDatabase{data: make(map[string]string)}
+
 func main() {
 	r := mux.NewRouter()
-	r.HandleFunc("/{hash}", RedirectHandlerFunc).Methods(http.MethodGet)
+	r.HandleFunc("/{hash}", RedirectHandler(memoryDatabase)).Methods(http.MethodGet)
 	// Serve the home page
 	r.Handle("/", http.FileServer(http.Dir(".")))
 	// Serve static files

@@ -7,9 +7,12 @@ import (
 	"github.com/gorilla/mux"
 )
 
-//RedirectHandlerFunc handles all redirects
-func RedirectHandlerFunc(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	trimHash := vars["hash"]
-	fmt.Fprintf(w, "Redirecting now from %s", trimHash)
+//RedirectHandler returns a function that handles all redirects
+//A closure is used here so database can be mocked for tests
+func RedirectHandler(db database) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		vars := mux.Vars(r)
+		trimHash := vars["hash"]
+		fmt.Fprintf(w, "Redirecting now from %s", trimHash)
+	}
 }
