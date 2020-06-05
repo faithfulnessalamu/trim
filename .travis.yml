@@ -3,6 +3,7 @@ language: go
 branches:
   only:
     - master
+    - dev
 
 script:
   - go test -v ./...
