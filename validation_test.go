@@ -2,22 +2,22 @@ package main
 
 import (
 	"testing"
-
-	"github.com/stretchr/testify/require"
 )
 
 func TestIsValidURL(t *testing.T) {
-	goodURL1 := isValidURL("https://www.github.com/github")
-	goodURL2 := isValidURL("http://homeofthefree.org")
+	goodURLs := []string{"https://www.github.com/github", "http://homeofthefree.org"}
+	badURLs := []string{"hpt//isnota.protocol", "http://..."}
 
-	badURL1 := isValidURL("hpt//isnota.protocol")
-	badURL2 := isValidURL("http://...")
-
-	require := require.New(t)
-
-	require.True(goodURL1, "https://www.github.com/github should be a valid URL")
-	require.True(goodURL2, "http://homeofthefree.org should be a valid URL")
-
-	require.False(badURL1, "hpt//isnota.protocol should not be a valid URL")
-	require.False(badURL2, "http://... should not be a valid URL")
+	// Check goodURLs
+	for _, url := range goodURLs {
+		if !isValidURL(url) {
+			t.Errorf("%s should be a valid URL", url)
+		}
+	}
+	// Check badURLs
+	for _, url := range badURLs {
+		if isValidURL(url) {
+			t.Errorf("%s should not be a valid URL", url)
+		}
+	}
 }
