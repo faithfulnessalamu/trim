@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"net/http"
 	"net/http/httptest"
 	"path/filepath"
@@ -13,14 +14,19 @@ var testDb = &memDatabase{data: make(map[string]string)}
 
 func TestTrimHandlerExistentKey(t *testing.T) {
 	// Test that a bad request is returned for a key that already exists
-	testPath := "/trim?url=https://github.com"
+	// Create a request
+	testPath := "/trim"
+	payload := []byte(`{"url":"https://github.com"}`)
+
+	req, err := http.NewRequest(http.MethodGet, testPath, bytes.NewBuffer(payload))
+	req.Header.Set("Content-Type", "application/json")
+
 	actualURL := filepath.Join(baseURL, testPath)
 	// Get hash
 	trimHash := hash("https://github.com")
 	// Save hash to test db
 	testDb.save(trimHash, actualURL)
 
-	req, err := http.NewRequest(http.MethodGet, testPath, nil)
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -37,10 +43,14 @@ func TestTrimHandlerExistentKey(t *testing.T) {
 }
 
 func TestTrimHandlerBadURL(t *testing.T) {
-	// Test that a bad request is returned for a bad url
-	testPath := "/trim?url=https:git"
+	// Test that a bad request is returned for a bad url payload
+	// Create a request
+	testPath := "/trim"
+	payload := []byte(`{"url":"https:git"}`)
 
-	req, err := http.NewRequest(http.MethodGet, testPath, nil)
+	req, err := http.NewRequest(http.MethodGet, testPath, bytes.NewBuffer(payload))
+	req.Header.Set("Content-Type", "application/json")
+
 	if err != nil {
 		t.Fatal(err)
 	}
@@ -58,9 +68,13 @@ func TestTrimHandlerBadURL(t *testing.T) {
 
 func TestTrimHandler(t *testing.T) {
 	// Test that a status OK is returned for a nonexistent key
-	testPath := "/trim?url=https://github.com/thealamu/trim"
+	// Create a request
+	testPath := "/trim"
+	payload := []byte(`{"url":"https://github.com/thealamu/trim"}`)
 
-	req, err := http.NewRequest(http.MethodGet, testPath, nil)
+	req, err := http.NewRequest(http.MethodGet, testPath, bytes.NewBuffer(payload))
+	req.Header.Set("Content-Type", "application/json")
+
 	if err != nil {
 		t.Fatal(err)
 	}
