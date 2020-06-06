@@ -3,12 +3,78 @@ package main
 import (
 	"net/http"
 	"net/http/httptest"
+	"path/filepath"
 	"testing"
 
 	"github.com/gorilla/mux"
 )
 
 var testDb = &memDatabase{data: make(map[string]string)}
+
+func TestTrimHandlerExistentKey(t *testing.T) {
+	// Test that a bad request is returned for a key that already exists
+	testPath := "/trim?url=https://github.com"
+	actualURL := filepath.Join(baseURL, testPath)
+	// Get hash
+	trimHash := hash("https://github.com")
+	// Save hash to test db
+	testDb.save(trimHash, actualURL)
+
+	req, err := http.NewRequest(http.MethodGet, testPath, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rr := httptest.NewRecorder()
+	router := mux.NewRouter()
+	router.HandleFunc("/trim", TrimHandler(testDb))
+	router.ServeHTTP(rr, req)
+
+	// Do validations
+	if status := rr.Code; status != http.StatusBadRequest {
+		t.Errorf("Wrong status code, got: %v, want: %v", status, http.StatusBadRequest)
+	}
+}
+
+func TestTrimHandlerBadURL(t *testing.T) {
+	// Test that a bad request is returned for a bad url
+	testPath := "/trim?url=https:git"
+
+	req, err := http.NewRequest(http.MethodGet, testPath, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rr := httptest.NewRecorder()
+	router := mux.NewRouter()
+	router.HandleFunc("/trim", TrimHandler(testDb))
+	router.ServeHTTP(rr, req)
+
+	// Do validations
+	if status := rr.Code; status != http.StatusBadRequest {
+		t.Errorf("Wrong status code, got: %v, want: %v", status, http.StatusBadRequest)
+	}
+}
+
+func TestTrimHandler(t *testing.T) {
+	// Test that a status OK is returned for a nonexistent key
+	testPath := "/trim?url=https://github.com/thealamu/trim"
+
+	req, err := http.NewRequest(http.MethodGet, testPath, nil)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rr := httptest.NewRecorder()
+	router := mux.NewRouter()
+	router.HandleFunc("/trim", TrimHandler(testDb))
+	router.ServeHTTP(rr, req)
+
+	// Do validations
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("Wrong status code, got: %v, want: %v", status, http.StatusOK)
+	}
+}
 
 func TestRedirectHandler(t *testing.T) {
 	// Test that the redirect handler actually redirects.
