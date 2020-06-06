@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"path/filepath"
@@ -8,16 +9,27 @@ import (
 	"github.com/gorilla/mux"
 )
 
+type trimRequest struct {
+	URL string `json:"url"`
+}
+
 //TrimHandler returns a function that handles all trims
 //A closure is used so database can be mocked for tests
-//Matches /trim?url={url}
+//Matches /trim
 func TrimHandler(db database) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		// Get url
-		query := r.URL.Query()
-		actualURL := query.Get("url")
+		// Parse json body
+		decoder := json.NewDecoder(r.Body)
+		var tr trimRequest
+		dErr := decoder.Decode(&tr)
+		if dErr != nil {
+			// Couldn't get post request body
+			w.WriteHeader(http.StatusBadRequest)
+			infoLogger.Print("Invalid POST body")
+			return
+		}
+		actualURL := tr.URL
 		infoLogger.Printf("Trim request received for %s", actualURL)
-
 		// Check if is valid url
 		if !isValidURL(actualURL) {
 			infoLogger.Printf("Not a valid URL: %s", actualURL)
