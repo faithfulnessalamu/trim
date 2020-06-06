@@ -21,8 +21,8 @@ func TrimHandler(db database) func(w http.ResponseWriter, r *http.Request) {
 		// Check if is valid url
 		if !isValidURL(actualURL) {
 			infoLogger.Printf("Not a valid URL: %s", actualURL)
-			//TODO: Return a Bad Request, invalid URL
-			http.NotFound(w, r)
+			w.WriteHeader(http.StatusBadRequest)
+			fmt.Fprintln(w, "Not a valid URL")
 			return
 		}
 		// Get hash for actualURL
@@ -31,8 +31,8 @@ func TrimHandler(db database) func(w http.ResponseWriter, r *http.Request) {
 		err := db.save(trimHash, actualURL)
 		if err != nil {
 			infoLogger.Printf("%s already exists in database", actualURL)
-			//TODO: Return a Bad Request, key already exists
-			http.NotFound(w, r)
+			w.WriteHeader(http.StatusBadRequest)
+			fmt.Fprintln(w, err)
 		}
 		// Create the return url
 		returnURL := filepath.Join(baseURL, trimHash)
@@ -52,7 +52,8 @@ func RedirectHandler(db database) func(w http.ResponseWriter, r *http.Request) {
 		actualURL, err := db.retrieve(trimHash)
 		if err != nil {
 			infoLogger.Printf("%s key not in database", trimHash)
-			http.NotFound(w, r)
+			w.WriteHeader(http.StatusBadRequest)
+			fmt.Fprintln(w, err)
 			return
 		}
 		infoLogger.Printf("Redirecting to %s", actualURL)
