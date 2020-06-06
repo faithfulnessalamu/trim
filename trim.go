@@ -12,6 +12,7 @@ var (
 	memoryDatabase = &memDatabase{data: make(map[string]string)}
 	infoLogger     = log.New(os.Stdout, "INFO: ", log.LstdFlags)
 	debugLogger    = log.New(os.Stdout, "DEBUG: ", log.LstdFlags)
+	baseURL        = "localhost:8080"
 )
 
 func main() {

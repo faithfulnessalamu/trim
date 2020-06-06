@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"path/filepath"
 
 	"github.com/gorilla/mux"
 )
@@ -18,6 +19,25 @@ func TrimHandler(db database) func(w http.ResponseWriter, r *http.Request) {
 		infoLogger.Printf("Trim request received for %s", actualURL)
 
 		// Check if is valid url
+		if !isValidURL(actualURL) {
+			infoLogger.Printf("Not a valid URL: %s", actualURL)
+			//TODO: Return a Bad Request, invalid URL
+			http.NotFound(w, r)
+			return
+		}
+		// Get hash for actualURL
+		trimHash := hash(actualURL)
+		// Try to save
+		err := db.save(trimHash, actualURL)
+		if err != nil {
+			infoLogger.Printf("%s already exists in database", actualURL)
+			//TODO: Return a Bad Request, key already exists
+			http.NotFound(w, r)
+		}
+		// Create the return url
+		returnURL := filepath.Join(baseURL, trimHash)
+		infoLogger.Printf("Trim for %s is %s", actualURL, returnURL)
+		fmt.Fprint(w, returnURL)
 	}
 }
 
