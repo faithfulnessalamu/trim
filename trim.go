@@ -20,7 +20,7 @@ func main() {
 	//Matches 8 string hex hash for a redirect
 	r.HandleFunc("/{hash:[a-fA-F0-9]{8,8}}", RedirectHandler(memoryDatabase)).Methods(http.MethodGet)
 	//Match a trim request
-	r.HandleFunc("/trim", TrimHandler(memoryDatabase))
+	r.HandleFunc("/trim", TrimHandler(memoryDatabase)).Methods(http.MethodPost)
 	// Serve the home page
 	r.Handle("/", http.FileServer(http.Dir(".")))
 	// Serve static files
