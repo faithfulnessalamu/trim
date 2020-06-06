@@ -20,8 +20,10 @@
         <div class="fields_container">
             <div class="fields">
                 <div class="fields_submit_container">
-                    <input type="text" name="" placeholder="Enter the url">
-                    <button>Trim</button>
+                    <form action="/trim" method="POST">
+                        <input type="url" name="url" placeholder="Enter the url" required>
+                        <input type="submit" value="Trim">
+                    </form>
                 </div>
                 <p id="shortenedURL"> Shortened Url</p>
             </div>
