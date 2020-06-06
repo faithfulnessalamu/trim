@@ -73,6 +73,7 @@ body {
     border-style: none;
     outline: none;
     font-weight: bold;
+    cursor: pointer;
 }
 
 .fields_submit_container button:active {
