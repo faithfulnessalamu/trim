@@ -13,7 +13,7 @@ import (
 var testDb = &memDatabase{data: make(map[string]string)}
 
 func TestTrimHandlerExistentKey(t *testing.T) {
-	// Test that a bad request is returned for a key that already exists
+	// Test that a status ok is returned for a key that already exists
 	// Create a request
 	testPath := "/trim"
 	payload := []byte(`{"url":"https://github.com"}`)
@@ -37,8 +37,8 @@ func TestTrimHandlerExistentKey(t *testing.T) {
 	router.ServeHTTP(rr, req)
 
 	// Do validations
-	if status := rr.Code; status != http.StatusBadRequest {
-		t.Errorf("Wrong status code, got: %v, want: %v", status, http.StatusBadRequest)
+	if status := rr.Code; status != http.StatusOK {
+		t.Errorf("Wrong status code, got: %v, want: %v", status, http.StatusOK)
 	}
 }
 
