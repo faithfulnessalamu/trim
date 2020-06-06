@@ -12,7 +12,7 @@ Trim is a URL shortener built with golang using a redis backing database. An ins
 
 ## API :rocket:
 - [x] GET /
-- [x] POST /trim?url=
+- [x] POST /trim
 
 ## Development
 
