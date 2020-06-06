@@ -9,6 +9,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&family=Lato&family=Open+Sans&display=swap"
         rel="stylesheet">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
@@ -20,8 +21,8 @@
         <div class="fields_container">
             <div class="fields">
                 <div class="fields_submit_container">
-                    <form action="/trim" method="POST">
-                        <input type="url" name="url" placeholder="Enter the url" required>
+                    <form id="urlForm" action="/trim" method="POST">
+                        <input id="urlInput" type="url" name="url" placeholder="Enter the url" required>
                         <input type="submit" value="Trim">
                     </form>
                 </div>
@@ -29,6 +30,7 @@
             </div>
         </div>
     </div>
+    <script src="./static/script.js"></script>
 </body>
 
 </html>
