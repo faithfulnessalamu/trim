@@ -52,8 +52,7 @@ func RedirectHandler(db database) func(w http.ResponseWriter, r *http.Request) {
 		actualURL, err := db.retrieve(trimHash)
 		if err != nil {
 			infoLogger.Printf("%s key not in database", trimHash)
-			w.WriteHeader(http.StatusBadRequest)
-			fmt.Fprintln(w, err)
+			http.NotFound(w, r)
 			return
 		}
 		infoLogger.Printf("Redirecting to %s", actualURL)
