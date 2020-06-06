@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"path/filepath"
@@ -11,6 +12,63 @@ import (
 )
 
 var testDb = &memDatabase{data: make(map[string]string)}
+
+func TestPayloadify(t *testing.T) {
+	want := "This"
+	p := payloadify(want)
+	if want != p.Msg {
+		t.Errorf("Unexpected payload. Want: %s, got: %s", want, p.Msg)
+	}
+}
+
+func TestWritePayload(t *testing.T) {
+	testStatus := 100
+	rr := httptest.NewRecorder()
+	p := payloadify("Payload")
+
+	writePayload(testStatus, rr, p)
+	// Do validations
+	// Check status code
+	if rr.Code != testStatus {
+		t.Errorf("Unexpected status code. Want: %d, got: %d", testStatus, rr.Code)
+	}
+	// Check data
+	received := new(payload)
+	json.NewDecoder(rr.Body).Decode(received)
+	if received.Msg != p.Msg {
+		t.Errorf("Unexpected return data. Want: %s, got: %s", p.Msg, received.Msg)
+	}
+}
+
+func TestTrimHandlerInvalidPayload(t *testing.T) {
+	// Test that an invalid POST body returns a bad request error
+	// Create a request
+	testPath := "/trim"
+	payload := []byte(`{"url====https://github.com"}`)
+
+	req, err := http.NewRequest(http.MethodGet, testPath, bytes.NewBuffer(payload))
+	req.Header.Set("Content-Type", "application/json")
+
+	actualURL := filepath.Join(baseURL, testPath)
+	// Get hash
+	trimHash := hash("https://github.com")
+	// Save hash to test db
+	testDb.save(trimHash, actualURL)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	rr := httptest.NewRecorder()
+	router := mux.NewRouter()
+	router.HandleFunc("/trim", TrimHandler(testDb))
+	router.ServeHTTP(rr, req)
+
+	// Do validations
+	if status := rr.Code; status != http.StatusBadRequest {
+		t.Errorf("Wrong status code, got: %v, want: %v", status, http.StatusBadRequest)
+	}
+}
 
 func TestTrimHandlerExistentKey(t *testing.T) {
 	// Test that a status ok is returned for a key that already exists

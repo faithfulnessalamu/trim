@@ -63,7 +63,7 @@ func TrimHandler(db database) func(w http.ResponseWriter, r *http.Request) {
 		}
 		// Create the return url
 		returnURL := filepath.Join(baseURL, trimHash)
-		writePayload(http.StatusBadRequest, w, payloadify(returnURL))
+		writePayload(http.StatusOK, w, payloadify(returnURL))
 		infoLogger.Printf("Trim for %s is %s", actualURL, returnURL)
 	}
 }
