@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"path/filepath"
@@ -8,21 +9,49 @@ import (
 	"github.com/gorilla/mux"
 )
 
+type trimRequest struct {
+	URL string `json:"url"`
+}
+
+//payload is used to return a json payload
+type payload struct {
+	Msg string `json:"msg"`
+}
+
+// Create json from string
+func payloadify(s string) *payload {
+	p := new(payload)
+	p.Msg = s
+	return p
+}
+
+func writePayload(status int, w http.ResponseWriter, p *payload) {
+	w.WriteHeader(status)
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(p)
+}
+
 //TrimHandler returns a function that handles all trims
 //A closure is used so database can be mocked for tests
-//Matches /trim?url={url}
+//Matches /trim
 func TrimHandler(db database) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
-		// Get url
-		query := r.URL.Query()
-		actualURL := query.Get("url")
+		// Parse json body
+		decoder := json.NewDecoder(r.Body)
+		var tr trimRequest
+		dErr := decoder.Decode(&tr)
+		if dErr != nil {
+			// Couldn't get post request body
+			writePayload(http.StatusBadRequest, w, payloadify("Invalid POST body"))
+			infoLogger.Print("Invalid POST body")
+			return
+		}
+		actualURL := tr.URL
 		infoLogger.Printf("Trim request received for %s", actualURL)
-
 		// Check if is valid url
 		if !isValidURL(actualURL) {
+			writePayload(http.StatusBadRequest, w, payloadify("Not a valid URL"))
 			infoLogger.Printf("Not a valid URL: %s", actualURL)
-			w.WriteHeader(http.StatusBadRequest)
-			fmt.Fprintln(w, "Not a valid URL")
 			return
 		}
 		// Get hash for actualURL
@@ -31,13 +60,11 @@ func TrimHandler(db database) func(w http.ResponseWriter, r *http.Request) {
 		err := db.save(trimHash, actualURL)
 		if err != nil {
 			infoLogger.Printf("%s already exists in database", actualURL)
-			w.WriteHeader(http.StatusBadRequest)
-			fmt.Fprintln(w, err)
 		}
 		// Create the return url
 		returnURL := filepath.Join(baseURL, trimHash)
+		writePayload(http.StatusOK, w, payloadify(returnURL))
 		infoLogger.Printf("Trim for %s is %s", actualURL, returnURL)
-		fmt.Fprint(w, returnURL)
 	}
 }
 
