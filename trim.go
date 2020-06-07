@@ -12,10 +12,13 @@ var (
 	memoryDatabase = &memDatabase{data: make(map[string]string)}
 	infoLogger     = log.New(os.Stdout, "INFO: ", log.LstdFlags)
 	debugLogger    = log.New(os.Stdout, "DEBUG: ", log.LstdFlags)
-	baseURL        = "localhost:8080"
+	baseURL        = "trimly.herokuapp.com"
 )
 
+var port = os.Getenv("PORT")
+
 func main() {
+
 	r := mux.NewRouter()
 	//Matches 8 string hex hash for a redirect
 	r.HandleFunc("/{hash:[a-fA-F0-9]{8,8}}", RedirectHandler(memoryDatabase)).Methods(http.MethodGet)
@@ -27,6 +30,6 @@ func main() {
 	statics := r.PathPrefix("/static/")
 	statics.Handler(http.StripPrefix("/static/", http.FileServer(http.Dir("./static"))))
 
-	infoLogger.Println("Serving on port 8080...")
-	http.ListenAndServe(":8080", r)
+	infoLogger.Printf("Serving on port %s", port)
+	http.ListenAndServe(":"+port, r)
 }
