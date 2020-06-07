@@ -2,7 +2,6 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"path/filepath"
 
@@ -83,6 +82,6 @@ func RedirectHandler(db database) func(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 		infoLogger.Printf("Redirecting to %s", actualURL)
-		fmt.Fprintf(w, "Redirecting now to %s", actualURL)
+		http.Redirect(w, r, actualURL, http.StatusTemporaryRedirect)
 	}
 }
