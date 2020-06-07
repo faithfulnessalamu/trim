@@ -175,14 +175,8 @@ func TestRedirectHandler(t *testing.T) {
 
 	// Do validations
 	// Check status code
-	if status := rr.Code; status != http.StatusOK {
-		t.Errorf("Wrong status code, got: %v, want: %v", status, http.StatusOK)
-	}
-
-	// Check body
-	expected := "Redirecting now to localhost:8080"
-	if got := rr.Body.String(); got != expected {
-		t.Errorf("Unexpected body, got: %v, expected: %v", got, expected)
+	if status := rr.Code; status != http.StatusTemporaryRedirect {
+		t.Errorf("Wrong status code, got: %v, want: %v", status, http.StatusTemporaryRedirect)
 	}
 }
 
