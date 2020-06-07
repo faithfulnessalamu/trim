@@ -15,10 +15,16 @@ var (
 	baseURL        = "trimly.herokuapp.com"
 )
 
-var port = os.Getenv("PORT")
+var port string
+
+func init() {
+	port = os.Getenv("PORT")
+	if port == "" {
+		port = "8080"
+	}
+}
 
 func main() {
-
 	r := mux.NewRouter()
 	//Matches 8 string hex hash for a redirect
 	r.HandleFunc("/{hash:[a-fA-F0-9]{8,8}}", RedirectHandler(memoryDatabase)).Methods(http.MethodGet)
