@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.com/thealamu/trim.svg?branch=master)](https://travis-ci.com/thealamu/trim) [![codecov](https://codecov.io/gh/thealamu/trim/branch/master/graph/badge.svg)](https://codecov.io/gh/thealamu/trim) [![Go Report Card](https://goreportcard.com/badge/github.com/thealamu/trim)](https://goreportcard.com/report/github.com/thealamu/trim)
 
-Trim is a URL shortener built with golang using a redis backing database. An instance is deployed at [trim.ly](https://trimly.herokuapp.com).
+Trim is a URL shortener built with golang using a redis backing database(WIP!...stores data in memory for now). An instance is deployed at [trim.ly](https://trimly.herokuapp.com).
 
 ## Features
 - Fast API response and redirect
