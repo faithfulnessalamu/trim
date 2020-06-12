@@ -4,20 +4,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trim URL Shortener</title>
-    <link rel="stylesheet" href="./static/style.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&family=Lato&family=Open+Sans&display=swap"
-        rel="stylesheet">
+    <title>Url Trim</title>
+    <link rel="stylesheet" href="static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&family=Lato&family=Open+Sans&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+
 </head>
 
 <body>
-    <div class="main_container">
-        <div class="title_container">
-            <h1>Trim</h1>
-            <h3>Url Shortener</h3>
+    <div class="wrapper">
+        <div id="Home" class="header-section">
+            <h3>Trim</h3>
+            <nav>
+                <ul id="navs" class="nav-links">
+                    <li><a href="#Home">Home</a></li>
+                    <li><a href="#">Statistics</a></li>
+                    <li><a href="#">Contacts</a></li>
+                </ul>
+            </nav>
+            <li class="hamburger"><a href="javascript:void(0);" onclick="dropdownMenu()">&#9776</a></li>
+            </ul>
+
         </div>
+
+        <div class="description-section">
+            <div class="content">
+                <h1>URL Shortener</h1>
+                <p>Trim your web links to a much shorter for easier usage.</p>
+                <p>View statstics about a shortened web link.</p>
+            </div>
+            <div class="picture">
+                <img src="static/images/3401776.jpg" alt="computer Files">
+            </div>
+
+        </div>
+
         <div class="fields_container">
             <div class="fields">
                 <div class="fields_submit_container">
@@ -29,8 +50,12 @@
                 <p id="shortenedURL"> Shortened Url</p>
             </div>
         </div>
+
+
     </div>
-    <script src="./static/script.js"></script>
+
+    <script src="static/script.js"></script>
+
 </body>
 
 </html>
