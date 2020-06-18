@@ -1,15 +1,49 @@
-const navs = document.getElementById('navs');
+const toggle = document.querySelector(".toggle");
+const menu = document.querySelector(".menu");
+const trim = document.querySelector(".trim");
+const overlay = document.querySelector(".overlay");
+const result = document.querySelector(".result");
+const close = document.querySelector(".close");
+const btn = document.querySelector(".btn");
+
 var payload = {};
 var form = document.getElementById("urlForm");
 
-function dropdownMenu() {
-    if (navs.className === "nav-links") {
-        navs.className += "responsive";
+/* Toggle mobile menu */
+function toggleMenu() {
+    if (menu.classList.contains("active")) {
+        menu.classList.remove("active");
+        
+        toggle.querySelector("a").innerHTML = "<i class='fas fa-bars'></i>";
     } else {
-        navs.className = "nav-links";
+        menu.classList.add("active");
+        
+        toggle.querySelector("a").innerHTML = "<i class='fas fa-times'></i>";
     }
-
 }
+
+/* Trim Functions */
+function Trim() {
+    
+    overlay.classList.add("show");
+    result.classList.add("show");
+}
+
+
+// Remove Overlay
+function removeOverlay(){
+    overlay.classList.remove("show");
+    result.classList.remove("show");
+}
+
+
+btn.addEventListener("click", (e) => {
+    e.preventDefault()
+
+    const tooltip = document.querySelector(".tooltip");
+    tooltip.classList.add("show");
+
+})
 
 form.addEventListener("submit", (e) => {
     e.preventDefault()
@@ -19,14 +53,27 @@ form.addEventListener("submit", (e) => {
         // Make the request
     axios.post("/trim", payload)
         .then((response) => {
-            var status = response.status
-            var data = response.data
+            let status = response.status
+            let data = response.data
             console.log(data.msg)
                 //Update Dom        
-            var p = document.getElementById("shortenedURL")
+            let p = document.getElementById("trim_url")
             p.innerHTML = data.msg
+
+            Trim()
         })
         .catch((error) => {
             console.log(error)
         })
 })
+
+
+// Copy To clip Board function
+
+new ClipboardJS('.btn');
+
+
+/* Event Listener */
+toggle.addEventListener("click", toggleMenu, false);
+
+close.addEventListener("click", removeOverlay, false);
