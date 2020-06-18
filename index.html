@@ -5,57 +5,54 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trim</title>
-    <link rel="stylesheet" href="static/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700&family=Lato&family=Open+Sans&display=swap" rel="stylesheet">    
-    <link rel="stylesheet" href="./static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+    <link rel="stylesheet" href="./static/css/style.css">
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 
 <body>
-    <div class="wrapper">
-        <div id="Home" class="header-section">
-            <h3>Trim</h3>
+    <header>
+        <div class="wrapper">
             <nav>
-                <ul id="navs" class="nav-links">
-                    <li><a href="#Home">Home</a></li>
-                    <li><a href="#">Statistics</a></li>
-                    <li><a href="#">Contacts</a></li>
+                <ul class="menu">
+                    <li class="logo"><a href=".">
+                            <img src="./static/images/logo.svg" width="40px" alt="">
+                            <span>Trim</span>
+                        </a></li>
+                    <li class="item"><a href=".">Home</a></li>
+                    <li class="item"><a href="#">Statistics</a></li>
+                    <li class="item button"><a href="./contact.html">Contact</a></li>
+                    <li class="toggle"><a href="#"><i class="fas fa-bars"></i></a></li>
                 </ul>
             </nav>
-            <li class="hamburger"><a href="javascript:void(0);" onclick="dropdownMenu()">&#9776</a></li>
-            </ul>
-
         </div>
-
-        <div class="description-section">
-            <div class="content">
-                <h1>URL Shortener</h1>
-                <p>Trim your web links to a much shorter for easier usage.</p>
-                <p>View statstics about a shortened web link.</p>
-            </div>
-            <div class="picture">
-                <img src="static/images/3401776.jpg" alt="computer Files">
-            </div>
-
-        </div>
-
-        <div class="fields_container">
-            <div class="fields">
-                <div class="fields_submit_container">
+    </header>
+    <section class="content">
+        <div class="wrapper">
+            <div class="circle_overlay top"></div>
+            <div class="circle_overlay bottom"></div>
+            <div class="overlay"></div>
+            <div class="head_info">
+                <h1>Let's Trim</h1>
+                <p>Having a long link may not be pleasing to the eye, Trim is a free tool to shorten your url or reduce link. Use our URL to create a shortened link to make it easy to remember.</p>
+                <div class="input_group">
                     <form id="urlForm" action="/trim" method="POST">
                         <input id="urlInput" type="url" name="url" placeholder="Enter the url" required>
-                        <input type="submit" value="Trim">
+                        <input class="trim" type="submit" value="Trim">
                     </form>
                 </div>
-                <p id="shortenedURL"> Shortened Url</p>
+            </div>
+            <img src="./static/images/laptop_model.svg" width="650px" alt="">
+            <div class="result">
+                <span class="close"><i class='fas fa-times'></i></span>
+                <span class="overlay_input" id="trim_url"></span>
+                <button id="btnCopy" data-clipboard-target="#trim_url" class="btn">Copy Link</button>
+                <span class="tooltip show">Copied</span>
             </div>
         </div>
-
-
-    </div>
-
+    </section>
+    <script src="static/clipboard.min.js"></script>
     <script src="static/script.js"></script>
-
 </body>
 
 </html>
