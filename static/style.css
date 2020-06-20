@@ -1,0 +1,230 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Lato', sans-serif;
+    line-height: 1.5rem;
+}
+
+h1 {
+    font-family: 'Kanit', sans-serif
+}
+
+h3 {
+    font-family: 'Open Sans', sans-serif;
+}
+
+.wrapper {
+    padding: 2% 3%;
+}
+
+.header-section {
+    display: flex;
+    align-items: center;
+}
+
+.header-section>h3 {
+    flex: 1;
+    font-family: 'Kanit', sans-serif
+}
+
+.header-section nav ul {
+    display: flex;
+    list-style: none;
+}
+
+.header-section nav ul a {
+    text-decoration: none;
+    color: #4d4d4d;
+    display: block;
+    margin: 0 0.8rem;
+}
+
+.header-section nav ul a:hover {
+    color: #f44336;
+}
+
+.header-section .hamburger {
+    list-style: none;
+    display: none;
+}
+
+.header-section .hamburger a {
+    text-decoration: none;
+    border: #4d4d4d solid 1px;
+    padding: 5px 5px;
+    text-align: center;
+    color: #4d4d4d;
+}
+
+.description-section {
+    display: flex;
+    align-items: center;
+}
+
+.description-section .content {
+    flex: 1;
+    padding-left: 10%;
+}
+
+.content h1 {
+    font-size: 3rem;
+    margin-bottom: 4%;
+    line-height: 3rem;
+}
+
+.description-section .picture {
+    flex: 1.5;
+    text-align: start;
+    margin-right: 10%;
+}
+
+.description-section .picture img {
+    width: 100%;
+}
+
+
+/* Experimental zone */
+
+.fields_container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+}
+
+.fields_container .fields {
+    margin: auto;
+    width: 60%;
+    background-color: #718Cf5;
+    border-radius: 10px;
+    padding: 3% 5%;
+}
+
+.fields .fields_submit_container form {
+    display: flex;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+.fields_submit_container form input[type="url"] {
+    flex: 8;
+    outline: none;
+    font-size: medium;
+    font-family: 'Lato', sans-serif;
+    padding: 3% 3%;
+}
+
+.fields_submit_container form input[type="url"]:focus {
+    border: #f44336 solid 2px;
+}
+
+.fields_submit_container form input[type="submit"] {
+    flex: 1;
+    background-color: #f44336;
+    color: white;
+    padding: 3% 3%;
+    border-style: none;
+    outline: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.fields_submit_container form input[type="submit"]:active {
+    background-color: #e65100;
+}
+
+.fields p {
+    width: 100%;
+    background-color: #e0e0e0;
+    padding: 3% 3%;
+    text-align: center;
+}
+
+@media only screen and (max-width: 768px) {
+    .wrapper {
+        padding: 0;
+    }
+    .header-section {
+        display: block;
+        padding: 4% 4%;
+        margin: 0;
+        background-color: #718Cf5;
+    }
+    .header-section .hamburger {
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        margin: 4% 2%;
+    }
+    .header-section .hamburger a {
+        color: white;
+        border-color: white;
+        border-width: 3px;
+    }
+    .header-section nav ul {
+        display: none;
+        margin: 0 -0.8rem;
+    }
+    .header-section nav ul li a {
+        padding: 1% 0;
+        color: white;
+    }
+    .header-section nav ul a:hover {
+        color: #f44336;
+    }
+    .header-section h3 {
+        margin-bottom: 1%;
+        color: white;
+    }
+    .header-section nav .nav-linksresponsive {
+        display: block;
+    }
+    .description-section {
+        display: block;
+        margin-top: 20px;
+        text-align: left;
+        align-items: flex-start;
+        justify-content: left;
+        padding: 2% 6%;
+    }
+    .description-section .content {
+        padding-left: 0;
+    }
+    .description-section .content h1 {
+        font-size: 2.0rem;
+        margin-bottom: 0%;
+    }
+    .description-section .content p {
+        display: none;
+    }
+    .description-section .picture {
+        margin: 0 auto;
+    }
+    /* Experimantal section */
+    .fields_container .fields {
+        width: 100%;
+        background-color: white;
+        padding: 4% 10%;
+    }
+    .fields_container {
+        margin-top: 2%;
+    }
+    .fields .fields_submit_container form {
+        flex-direction: column;
+    }
+    .fields_submit_container form input[type="submit"] {
+        margin: 0 35%;
+        margin-top: 6%;
+        margin-bottom: 3%;
+        border-radius: 15px;
+        padding: 2% 2%;
+    }
+    .fields_submit_container input [type="url"] {
+        padding: 3% 3%;
+        border-radius: 10px;
+    }
+    .fields p {
+        border-radius: 5px;
+    }
+}
